@@ -32,6 +32,8 @@ def customers_list(request):
 
         return Response({'data': serializer.data , 'count': paginator.count, 'numpages' : paginator.num_pages, 'nextlink': '/api/customers/?page=' + str(nextPage), 'prevlink': '/api/customers/?page=' + str(previousPage)})
 
+
+
     elif request.method == 'POST':
         serializer = ImageDataSerializer(data=request.data)
         if serializer.is_valid():
