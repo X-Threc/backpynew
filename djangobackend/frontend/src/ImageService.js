@@ -26,8 +26,8 @@ export default class ImageService{
 	// 	const url = `${API_URL}/api/customers/${customer.pk}`;
 	// 	return axios.put(url,customer);
 	// }
-	createCustomer(imageData){
-		const url = `${API_URL}/api/customers/`;
+	postImageData(imageData){
+		const url = `${API_URL}/api/Image/`;
 		return axios.post(url,imageData).then(response => response.data);
 	}
 

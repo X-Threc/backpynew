@@ -1,17 +1,53 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser, FormParser
 from .models import ImageDataTo
 from .serializers import *
+from ImageFunction.ImageFunction import translate_string
+
+class ImageView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        serializer = ImageDataSerializer(data=request.data)
+        print(serializer)
+        if serializer.is_valid():
+            buf=serializer.save()
+            image_url=buf.image_url.name
+            print(image_url)
+            from_language=buf.from_language
+            to_language=buf.to_language
+
+            translated_text = translate_string(image_url, to_lang=to_language, from_lang=from_language)
+            print(translated_text)
+            return Response(data=translated_text, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'POST'])
-def Image_request(request):
-    """
- Add new image for function translate and get data after function translate.
- """
+
+
+# @api_view(['POST'])
+# def Image_request(request):
+#     """
+#  Add new image for function translate and get data after function translate.
+#  """
+#
+#     if request.method == 'POST':
+#         serializer = ImageDataSerializer(data=request.data)
+#         print(serializer)
+#         if serializer.is_valid():
+#             # serializer.save()
+#             image_url = serializer.data['image_url']
+#             from_language = serializer.data['from_language']
+#             print(from_language)
+#             to_language = serializer.data['to_language']
+#             translated_text = translate_string(image_url, to_lang=to_language, from_lang=from_language)
+#             return Response(data=translated_text, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     # if request.method == 'GET':
     #     data = []
     #     customers = ImageDataTo.objects.all()
@@ -34,12 +70,7 @@ def Image_request(request):
     #                      'prevlink': '/api/customers/?page=' + str(previousPage)})
 
 
-    if request.method == 'POST':
-        serializer = ImageDataSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 # @api_view(['GET', 'PUT', 'DELETE'])
