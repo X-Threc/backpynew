@@ -37,3 +37,21 @@
     transform: rotate(360deg);
   }
 }
+
+.imageInput{
+  height: auto;
+  min-height: 300px;
+  max-width: 100%;
+}
+
+.translatedText{
+  height: auto;
+  width: auto;
+}
+.header{
+  background-color: #24282c;
+}
+
+.drop-area{
+  min-height: 300px;
+}

@@ -16,12 +16,14 @@ class ImageDisplay extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImageChange = this.handleImageChange.bind(this);
+
     this.state = {
       text: '',
       image: null,
       imagePreviewUrl: '',
       fromLanguage: null,
-      toLanguage: null
+      toLanguage: null,
+      drag: false
     };
   }
 
@@ -29,7 +31,7 @@ class ImageDisplay extends Component {
     event.preventDefault();
     let reader = new FileReader();
     let image = event.target.files[0];
-    reader.onloadend = () =>{
+    reader.onloadend = () => {
       this.setState({
         image: image,
         imagePreviewUrl: reader.result
@@ -40,20 +42,22 @@ class ImageDisplay extends Component {
 
 
   handleFromLangChange = (fromLanguage1) => {
-    this.setState({fromLanguage: fromLanguage1.value
+    this.setState({
+      fromLanguage: fromLanguage1.value
     }, () =>
       console.log(`Option selected:`, this.state.fromLanguage)
     );
   };
 
   handleToLangChange = (toLanguage1) => {
-    this.setState({toLanguage: toLanguage1.value
+    this.setState({
+      toLanguage: toLanguage1.value
     }, () =>
       console.log(`Option selected:`, this.state.toLanguage)
     );
   };
 
-  handleSubmit(event){
+  handleSubmit(event) {
     event.preventDefault();
     console.log(this.state);
     let form_data = new FormData();
@@ -66,65 +70,64 @@ class ImageDisplay extends Component {
         'content-type': 'multipart/form-data'
       }
     }
-    ).then(result => this.setState({text: result}))
-    .catch(err => console.log(err))  
+    ).then(result => this.setState({ text: result }))
+      .catch(err => console.log(err))
   };
- 
-  
+
+
 
   render() {
-    console.log(this.state.fromLanguage)
     let text = this.state.text;
     let fromLanguage = this.state.fromLanguage;
     let toLanguage = this.state.toLanguage;
     let imagePreviewUrl = this.state.imagePreviewUrl
     let $imagePreview = null;
+    let drag =this.state.drag;
+    console.log("drag",drag)
 
-
-    if(imagePreviewUrl){
-      $imagePreview = (<img src={imagePreviewUrl} />);
+    if (imagePreviewUrl) {
+      $imagePreview = (<img height={500}src={imagePreviewUrl} />);
     } else {
-      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+      $imagePreview = (<div className="previewText">Выберите изображение для перевода</div>);
     }
 
     let $textPreview = null;
     if (text) {
       $textPreview = (<h2>{text}</h2>);
     } else {
-      $textPreview = (<p>Нет текста</p>);
+      $textPreview = (<p className='text-secondary d-flex justify-content-center'>Перевод не получен</p>);
     }
 
     return (
-      <div className="previewComponent">
+      <div className="previewComponent bg-dark">
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label>
-              Перевести с:</label>
-            {/* <input className="form-control" type="text" ref='fromLanguage' /> */}
-            <Select 
-              onChange={this.handleFromLangChange}
-              options={options}
-              />
-              
+          <div className="form-group d-flex justify-content-center align-items-center rounded-bottom bg-secondary mr-4 ml-4">
+            <div className='w-25 pr-2 m-2'>
+              <label>Перевести с:</label>
+              <Select
+                onChange={this.handleFromLangChange}
+                options={options} />
+            </div>
+            <div className='w-25 pr-2 mr-2'>
+              <label>Перевести на:</label>
+              <Select
+                onChange={this.handleToLangChange}
+                options={options} />
+            </div>
+            <input className="btn btn-dark text-warning" type="submit" value="Перевести" />
+          </div>
+          <div className='imageInput d-flex flex-column border rounded bg-dark  text-white ml-4 mr-4 p-1'>
+            <input
+            type="file"
+            onChange={this.handleImageChange} required />
 
-            <label>
-              Перевести на:</label>
-            {/* <input className="form-control" type="text" ref='toLanguage' /> */}
-            <Select 
-              onChange={this.handleToLangChange}
-              options={options}/>
-
-
-            <input className="imageInput"
-              type="file"
-              onChange={this.handleImageChange} required/>
-            <input className="btn btn-primary" type="submit" value="Submit" />
+            <div className="imgPreview position-relative p-1">
+              {$imagePreview}
+            </div>
           </div>
         </form>
-        <div className="imgPreview">
-          {$imagePreview}
-        </div>
-        <div className="translatedText">
+        
+        <div className="translatedText border rounded bg-white m-4 h-100">
           {$textPreview}
         </div>
       </div>

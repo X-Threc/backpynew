@@ -5,15 +5,10 @@ import ImageDisplay from './ImageDisplay'
 import './App.css';
 
 const BaseLayout = () => (
-  <div className="container-fluid">
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="#">Django+React Demo</a>
-      <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-      </div>
-    </nav>
+  <div className="position-absolute w-100">
+    <div className="header">
+      <a className="d-flex navbar-brand text-white justify-content-center w-100" href="#">BACKpy.Перевод</a>
+    </div>
 
     <div className="content">
       <Routes>
