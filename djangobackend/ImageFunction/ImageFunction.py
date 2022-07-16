@@ -14,13 +14,13 @@ def recognize_text(img_path, to_lang, from_lang):
     img_1 = cv2.imread(img_path)
     print(img_path)
     # img_1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2RGB)
-    reader = easyocr.Reader([to_lang, from_lang])
+    reader = easyocr.Reader([from_lang])
     data = reader.readtext(img_path)
     finding_text = ''
     print(data)
     datanew=[]
     for (bbox, text, prob) in data:
-        if prob > 0.5:
+        if prob > 0.2:
             print((bbox, text, prob))
             (top_left, top_right, bottom_right, bottom_left)\
                 = bbox
@@ -38,7 +38,7 @@ def recognize_text(img_path, to_lang, from_lang):
 
 def translate_string(image_path, to_lang, from_lang):
     find_text1 = recognize_text(image_path, to_lang, from_lang)
-    IAM_TOKEN = ""
+    IAM_TOKEN = "t1.9euelZqTzpXGx5GalZ6bkcjIj5eele3rnpWakszJkZmezomRk5aOj4qSx5Tl9Pc0X2Jq-e8XUmuR3fT3dA1gavnvF1JrkQ.2fhdlS3C5DOEU0S6EXHYrpYG7-C1h4dfJtyO8YI2-i46_BeQItX9hfcLZA7vsoXC6emHnDbuOzlXmqKmFN10CA"
     folder_id = "b1g8r0em20l4dh6sfnaq"
     body = {
         "sourceLanguageCode": from_lang,

@@ -5,9 +5,11 @@ import ImageService from './ImageService';
 const imageService = new ImageService();
 
 const options = [
-  { value: 'ru', label: 'Русский' },
   { value: 'en', label: 'Английский' },
-  { value: 'uk', label: 'Украинский' }
+  { value: 'pt', label: 'Португальский' },
+  { value: 'ru', label: 'Русский' },
+  { value: 'fr', label: 'Французский' },
+  { value: 'ja', label: 'Японский' },
 ]
 
 
