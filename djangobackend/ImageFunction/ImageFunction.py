@@ -38,8 +38,8 @@ def recognize_text(img_path, to_lang, from_lang):
 
 def translate_string(image_path, to_lang, from_lang):
     find_text1 = recognize_text(image_path, to_lang, from_lang)
-    IAM_TOKEN = "t1.9euelZqTzpXGx5GalZ6bkcjIj5eele3rnpWakszJkZmezomRk5aOj4qSx5Tl9Pc0X2Jq-e8XUmuR3fT3dA1gavnvF1JrkQ.2fhdlS3C5DOEU0S6EXHYrpYG7-C1h4dfJtyO8YI2-i46_BeQItX9hfcLZA7vsoXC6emHnDbuOzlXmqKmFN10CA"
-    folder_id = "b1g8r0em20l4dh6sfnaq"
+    IAM_TOKEN =""
+    folder_id = ""
     body = {
         "sourceLanguageCode": from_lang,
         "targetLanguageCode": to_lang,
